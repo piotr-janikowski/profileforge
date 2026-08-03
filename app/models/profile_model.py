@@ -12,5 +12,6 @@ class Profile(Base):
     phone_number = Column(String, nullable=True)
     email = Column(String, nullable=True)
     comment = Column(String, nullable=True)
+    notes = Column(String, nullable=True)
     source = Column(String, nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
