@@ -11,6 +11,7 @@ class Profile(Base):
     age = Column(Integer, nullable=True)
     phone_number = Column(String, nullable=True)
     email = Column(String, nullable=True)
+    address = Column(String, nullable=False)
     comment = Column(String, nullable=True)
     source = Column(String, nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())

@@ -7,37 +7,37 @@ Each source sends data as JSON, but the values are inconsistent in terms of form
 ### Source 1: Web Form
 
 ```json
-{
-  "name": "Michał Schabowy",
-  "age": "46",
-  "phone": "798.756.321",
-  "comment": "Za darmo albo zwrot"
-}
+{ 
+  "name": "Michał Kowalski", 
+  "age": "46", "phone": "798.756.321", 
+  "address": "ul. Lipowa 12 53-400, Wrocław", 
+  "comment": "Proszę o kontakt w sprawie oferty" }
 ```
 
 ### Source 2: Partner API
 
 ```json
 {
-  "first_name": "Janusz",
-  "last_name": "rolada",
-  "age": "55",
-  "email": "",
-  "phone": "621564 432"
-}
+  "first_name": "Janusz", 
+  "last_name": "Nowak", 
+  "age": "55", "email": "", 
+  "address": "Jana Pawła 2, 24-100, Gdańsk", 
+  "phone": "621564 432" 
+  }
 ```
 
 ### Source 3: CSV Import
 
 ```json
-{
-  "full_name": "mateusz kluska",
-  "nickname": "kluska",
-  "age": "25 ",
-  "email": " kluska@gmail",
-  "phone": "+48 456 756 754",
-  "comment": ""
-}
+{ 
+  "full_name": "Mateusz Wiśniewski", 
+  "last_name": "mateusz", 
+  "age": "25 ", 
+  "email": " mateusz.wisniewski@gmail", 
+  "phone": "+48 456 756 754", 
+  "address": "ul. Długa 5a 40600 Szczecin", 
+  "comment": "" 
+  }
 ```
 
 ## Canonical Profile (Normalized Data Model)
@@ -45,16 +45,15 @@ Each source sends data as JSON, but the values are inconsistent in terms of form
 Regardless of the data source, every profile stored in the database follows the same schema:
 
 ```json
-{
-  "first_name": "Michał",
-  "last_name": "Schabowy",
-  "age": 46,
-  "phone_number": "+48798756321",
-  "email": null,
-  "comment": "Za darmo albo zwrot",
-  "source": "web_form",
-  "created_at": "2026-07-23T10:00:00Z"
-}
+{ 
+  "first_name": "Michał", 
+  "last_name": "Kowalski", 
+  "age": 46, "phone_number": "+48798756321", 
+  "email": null, 
+  "comment": "Proszę o kontakt w sprawie oferty", 
+  "address": "Lipowa 12, 53-400, Wrocław", 
+  "source": "web_form", 
+  "created_at": "2026-07-23T10:00:00Z" }
 ```
 
 - `first_name`, `last_name` - always stored separately, even if the source provides a single `name` or `last_name` field.

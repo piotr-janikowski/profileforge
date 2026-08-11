@@ -7,6 +7,7 @@ class ProfileCreate(BaseModel):
     age: int | None = None
     phone_number: str | None = None
     email: str | None = None
+    address: str
     comment: str | None = None
     source: str
 
@@ -17,6 +18,7 @@ class ProfileOut(BaseModel):
     age: int | None
     phone_number: str | None
     email: str | None
+    address: str
     comment: str | None
     source: str
     created_at: datetime
