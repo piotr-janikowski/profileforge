@@ -50,8 +50,10 @@ def normalize_email(email: str | None) -> str | None:
     """Removes leading and trailing spaces and converts the email to lowercase."""
     if not email:
         return None
+
+    email = email.strip()
     
-    return email.strip().lower()
+    return email.lower() if email else None
 
 
 def normalize_address(address: str | None) -> str | None:
