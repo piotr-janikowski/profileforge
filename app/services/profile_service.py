@@ -3,7 +3,7 @@ from app.models.profile_model import Profile
 from app.schemas.profile_schema import ProfileCreate
 
 def create_profile(db: Session, data: ProfileCreate) -> Profile:
-    new_profile = Profile(**data.model_dump())
+    new_profile = Profile(**data.model_dump())  # **unpack the dictionary into keyword arguments and .model_dump() is used to convert the Pydantic model into a dictionary
     db.add(new_profile)
     db.commit()
     db.refresh(new_profile)
