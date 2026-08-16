@@ -11,7 +11,7 @@ class ProfileCreate(BaseModel):
     comment: str | None = None
     source: str
 
-class ProfileOut(BaseModel):
+class ProfileOut(BaseModel):    #Zwracanie danych po utworzeniu profilu / zwracanie profilu z GET /profiles
     id: int
     first_name: str
     last_name: str
@@ -24,4 +24,4 @@ class ProfileOut(BaseModel):
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True  # Pozwóla Pydantic tworzyć model z obiektu SQLAlchemy przez jego pola/atrybuty. Bez tego return często nie działa z response_model=ProfileOut w FastAPI, bo Pydantic nie wie jak zmapować obiekt SQLAlchemy na model Pydantic. 

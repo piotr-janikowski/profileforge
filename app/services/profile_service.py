@@ -9,8 +9,16 @@ def create_profile(db: Session, data: ProfileCreate) -> Profile:
     db.refresh(new_profile)
     return new_profile
 
+
+def save_profile(db: Session, profile: Profile) -> Profile:
+    db.commit()
+    db.refresh(profile)
+    return profile
+
+
 def get_profile(db: Session, profile_id: int) -> Profile | None:
     return db.query(Profile).filter(Profile.id == profile_id).first()
+
 
 def list_profiles(db: Session, skip: int = 0, limit: int = 20) -> list[Profile]:
     return db.query(Profile).offset(skip).limit(limit).all()
