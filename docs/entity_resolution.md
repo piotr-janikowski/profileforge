@@ -42,6 +42,10 @@ Dlatego fuzzy matching jest stosowany dopiero po nieudanych próbach dokładnego
 
 System nie określa, które źródło zawiera bardziej aktualne dane. W przypadku konfliktu wartości istniejących i przychodzących obecna reguła zawsze zachowuje wartość istniejącą w profilu.
 
+### Puste wartości pól wymagancyh
+
+System nie waliduje, czy wartości pól wymaganych są semantycznie poprawne. Przykładowo, jeżeli użytkownik poda tylko nazwisko, ProfileCreate może otrzymać first_name="". Pusty string zostanie zapisany do kolumny oznaczonej nullable=False, ponieważ w bazie danych "" nie jest traktowane jako NULL. W rezultacie rekord zostanie zaakceptowany, mimo że brak imienia oznacza niekompletne i potencjalnie śmieciowe dane.
+
 ## Reguła scalania (merge precedence)
 
 Obowiązuje zasada:

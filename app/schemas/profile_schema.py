@@ -11,6 +11,17 @@ class ProfileCreate(BaseModel):
     comment: str | None = None
     source: str
 
+
+class ProfileUpdate(BaseModel):
+    first_name: str | None = None
+    last_name: str | None = None
+    age: int | None = None
+    phone_number: str | None = None
+    email: str | None = None
+    address: str | None = None
+    comment: str | None = None
+    #source: str | None = None -m "source intentionally omitted - should not be editable after creation"
+
 class ProfileOut(BaseModel):    #Zwracanie danych po utworzeniu profilu / zwracanie profilu z GET /profiles
     id: int
     first_name: str
