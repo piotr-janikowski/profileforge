@@ -6,7 +6,7 @@ from app.services import profile_service
 
 router = APIRouter(prefix="/profiles", tags=["Profiles"])
 
-@router.post("/", response_model=ProfileOut)
+@router.post("/", response_model=ProfileOut, status_code=201)    # Messy data from external sources requires deduplication, while POST /profiles represents a workflow in which someone (e.g. through an administrative panel) intentionally creates a single, specific, already-clean profile.
 def create_profile(data: ProfileCreate, db: Session = Depends(get_db)):
     return profile_service.create_profile(db, data)
 

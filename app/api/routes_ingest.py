@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.database.session import get_db
 from app.schemas.ingest_schema import RawProfileIn
@@ -26,6 +26,8 @@ def ingest(data: RawProfileIn, db: Session = Depends(get_db)):
 
     normalized_name = normalize_name(data.name)
     normalized_first_name, normalized_last_name = split_full_name(normalized_name)
+    if not normalized_first_name and not normalized_last_name:
+        raise HTTPException(status_code=422, detail={"field": "name", "message": "Name could not be parsed into first and last name"})
     normalized_phone = normalize_phone(data.phone_number)
     normalized_age = normalize_age(data.age)
     normalized_email = normalize_email(data.email)
