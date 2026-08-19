@@ -20,7 +20,13 @@ router = APIRouter(tags=["Ingest"])
 
 
 # Orchestration endpoint for ingesting raw profile data
-@router.post("/ingest", response_model=ProfileOut)
+@router.post("/ingest",
+             response_model=ProfileOut,
+             summary="Ingest and normalize a raw profile",
+             description="Accepts raw profile data, normalizes the provided fields, and validates the profile name. " \
+             "If a matching profile is found based on identifying information, the incoming data is merged with the existing profile. " \
+             "Otherwise, a new profile is created. Returns the created or updated profile."
+             )
 def ingest(data: RawProfileIn, db: Session = Depends(get_db)):
     """Ingests a raw profile and returns the created or updated profile."""
 
