@@ -15,7 +15,3 @@ app.add_exception_handler(Exception, global_exception_handler)
 @app.get("/health")
 def health_check():
     return {"status": "ok"}
-
-@app.post("/ingest")
-def ingest(data: RawProfileIn):
-    return data

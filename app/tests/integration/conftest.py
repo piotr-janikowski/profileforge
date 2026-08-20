@@ -43,5 +43,5 @@ def client(db_session):
             pass
 
     app.dependency_overrides[get_db] = override_get_db  # Wszędzie, gdzie w kodzie jest Depends(get_db), na czas tego testu podstaw zamiast tego override_get_db
-    yield TestClient(app)
+    yield TestClient(app, raise_server_exceptions=False)
     app.dependency_overrides.clear()    # sprzątanie tej podmiany po teście, żeby kolejne testy nie zostały przypadkiem z tą podmianą na stałe.
