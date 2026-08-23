@@ -32,7 +32,7 @@ router = APIRouter(tags=["Ingest"])
     "If a matching profile is found based on identifying information, the incoming data is merged with the existing profile. "
     "Otherwise, a new profile is created. Returns the created or updated profile.",
 )
-def ingest(data: RawProfileIn, db: Session = Depends(get_db)):  # noqa: B008
+def ingest(data: RawProfileIn, db: Session = Depends(get_db)):
     """Ingests a raw profile and returns the created or updated profile."""
 
     normalized_name = normalize_name(data.name)

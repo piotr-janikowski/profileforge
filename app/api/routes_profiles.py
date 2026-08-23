@@ -17,7 +17,7 @@ router = APIRouter(prefix="/profiles", tags=["Profiles"])
     "deduplication against existing records. For ingesting raw, potentially "
     "duplicate data from external sources, use POST /ingest instead.",
 )  # Messy data from external sources requires deduplication, while POST /profiles represents a workflow in which someone (e.g. through an administrative panel) intentionally creates a single, specific, already-clean profile.
-def create_profile(data: ProfileCreate, db: Session = Depends(get_db)): # noqa: B008
+def create_profile(data: ProfileCreate, db: Session = Depends(get_db)):
     return profile_service.create_profile(db, data)
 
 
@@ -28,7 +28,7 @@ def create_profile(data: ProfileCreate, db: Session = Depends(get_db)): # noqa: 
     description="Updates an existing profile with the values provided in the request body."
     "Only the fields included in the request are modified. Returns the updated profile or a 404 error if the profile does not exist.",
 )
-def update_profile(profile_id: int, data: ProfileUpdate, db: Session = Depends(get_db)):    # noqa: B008
+def update_profile(profile_id: int, data: ProfileUpdate, db: Session = Depends(get_db)):
     updated = profile_service.update_profile(
         db, profile_id, data.model_dump(exclude_unset=True)
     )  # .model_dump(exclude_unset=True) zwraca tylko pola, które użytkownik podał. Gdyby było False to zwróciłby wszystkie niewypełnione jako None
@@ -44,7 +44,7 @@ def update_profile(profile_id: int, data: ProfileUpdate, db: Session = Depends(g
     description="Permanently deletes the profile with the specified ID. "
     "Returns a 404 error if the profile does not exist. On successful deletion, returns HTTP 204 No Content.",
 )
-def delete_profile(profile_id: int, db: Session = Depends(get_db)): # noqa: B008
+def delete_profile(profile_id: int, db: Session = Depends(get_db)):
     deleted = profile_service.delete_profile(db, profile_id)
     if not deleted:
         raise HTTPException(status_code=404, detail="Profile not found")
@@ -57,7 +57,7 @@ def delete_profile(profile_id: int, db: Session = Depends(get_db)): # noqa: B008
     summary="Get a profile by ID",
     description="Retrieves a single profile using its unique ID. Returns the profile data or a 404 error if the profile does not exist.",
 )
-def get_profile(profile_id: int, db: Session = Depends(get_db)):    # noqa: B008
+def get_profile(profile_id: int, db: Session = Depends(get_db)):
     profile = profile_service.get_profile(db, profile_id)
     if profile is None:
         raise HTTPException(status_code=404, detail="Profile not found")
@@ -76,6 +76,6 @@ def list_profiles(
     limit: int = 20,
     email: str | None = None,
     source: str | None = None,
-    db: Session = Depends(get_db),  # noqa: B008
+    db: Session = Depends(get_db),
 ):
     return profile_service.list_profiles(db, skip, limit, email, source)
