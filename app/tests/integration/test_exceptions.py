@@ -3,7 +3,7 @@ from app.services import profile_service
 
 def test_global_exception_handler(client, monkeypatch):
     def mock_get_profile(*args, **kwargs):
-        raise Exception("Something went wrong") # noqa: TRY002
+        raise Exception("Something went wrong")
 
     monkeypatch.setattr(
         profile_service,
