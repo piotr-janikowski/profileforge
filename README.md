@@ -260,14 +260,14 @@ curl -X POST "http://localhost:8000/ingest" \
   -H "accept: application/json" \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "  Michał Kowalski ",
-    "age": "46",
-    "phone_number": "798.756.321",
-    "email": " ",
-    "address": "ul. Lipowa 12 53-400, Wrocław",
-    "comment": "Proszę o kontakt w sprawie oferty",
-    "source": "web_form"
-  }'
+  "name": "robert  nowak ",
+  "age": "45 ",
+  "phone_number": " 501 455 455",
+  "email": "Robertnowak@gmail.com ",
+  "address": " ul. Nowa  65",
+  "comment": "I'm interested in the premium offer. ",
+  "source": "csv-file"
+}'
 ```
 
 ### Result
@@ -276,16 +276,16 @@ The input is converted into the canonical profile format:
 
 ```json
 {
-  "id": 1,
-  "first_name": "Michał",
-  "last_name": "Kowalski",
-  "age": 46,
-  "phone_number": "+48798756321",
-  "email": null,
-  "address": "ul. Lipowa 12 53-400, Wrocław",
-  "comment": "Proszę o kontakt w sprawie oferty",
-  "source": "web_form",
-  "created_at": "2026-08-23T15:00:00Z"
+  "id": 14,
+  "first_name": "Robert",
+  "last_name": "Nowak",
+  "age": 45,
+  "phone_number": "+48501455455",
+  "email": "robertnowak@gmail.com",
+  "address": "ul. Nowa 65",
+  "comment": "I'm interested in the premium offer.",
+  "source": "csv-file",
+  "created_at": "2026-08-23T15:38:47.991007Z"
 }
 ```
 

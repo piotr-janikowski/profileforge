@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: profileforge_user
+          POSTGRES_PASSWORD: test_password
+          POSTGRES_DB: profileforge_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U profileforge_user -d profileforge_db"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+
+      postgres-test:
+        image: postgres:16
+        env:
+          POSTGRES_USER: profileforge_test_user
+          POSTGRES_PASSWORD: test_password
+          POSTGRES_DB: profileforge_test_db
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd "pg_isready -U profileforge_test_user -d profileforge_test_db"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14.7"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -r requirements-dev.txt
+
+      - name: Run Ruff
+        run: ruff check app/
+
+      - name: Check Black formatting
+        run: black --check app/
+
+      - name: Run database migrations
+        env:
+          POSTGRES_USER: profileforge_user
+          POSTGRES_PASSWORD: test_password
+          POSTGRES_DB: profileforge_db
+          POSTGRES_HOST: localhost
+          POSTGRES_TEST_USER: profileforge_test_user
+          POSTGRES_TEST_PASSWORD: test_password
+          POSTGRES_TEST_DB: profileforge_test_db
+        run: alembic upgrade head
+
+      - name: Run tests
+        env:
+          POSTGRES_USER: profileforge_user
+          POSTGRES_PASSWORD: test_password
+          POSTGRES_DB: profileforge_db
+          POSTGRES_HOST: localhost
+          POSTGRES_TEST_USER: profileforge_test_user
+          POSTGRES_TEST_PASSWORD: test_password
+          POSTGRES_TEST_DB: profileforge_test_db
+        run: pytest
