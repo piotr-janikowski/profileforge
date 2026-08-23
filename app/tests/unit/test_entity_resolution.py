@@ -2,6 +2,7 @@ from app.database.session import SessionLocal
 from app.models.profile_model import Profile
 from app.services.entity_resolution import find_matching_profile, merge_profiles
 
+
 def test_find_matching_profile_by_email():
     db = SessionLocal()
 

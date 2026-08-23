@@ -1,7 +1,7 @@
 from fastapi import FastAPI
-from app.schemas.ingest_schema import RawProfileIn
-from app.api.routes_profiles import router as profiles_router
+
 from app.api.routes_ingest import router as ingest_router
+from app.api.routes_profiles import router as profiles_router
 from app.core.exceptions import global_exception_handler
 from app.core.logging_config import setup_logging
 

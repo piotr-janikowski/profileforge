@@ -1,6 +1,9 @@
 from app.models.profile_model import Profile
 
-def test_ingest_creates_new_profile(client, db_session): # Pytest sam rozpozna te nazwy jako fixture'y z conftest.py i je wywoła, w odpowiedniej kolejności
+
+def test_ingest_creates_new_profile(
+    client, db_session
+):  # Pytest sam rozpozna te nazwy jako fixture'y z conftest.py i je wywoła, w odpowiedniej kolejności
     payload = {
         "name": "Michał Kowalski",
         "age": "26",
@@ -23,7 +26,6 @@ def test_ingest_creates_new_profile(client, db_session): # Pytest sam rozpozna t
     assert data["address"] == "ul. Długa 10, Wrocław"
     assert data["comment"] == None
     assert data["source"] == "web_form"
-
 
 
 def test_ingest_merges_duplicate_by_email(client, db_session):

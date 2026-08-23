@@ -1,12 +1,13 @@
 import pytest
+
 from app.services.normalization import (
+    normalize_address,
+    normalize_age,
+    normalize_comment,
     normalize_email,
     normalize_name,
-    split_full_name,
-    normalize_age,
     normalize_phone,
-    normalize_address,
-    normalize_comment,
+    split_full_name,
 )
 
 

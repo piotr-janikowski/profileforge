@@ -1,6 +1,8 @@
-from app.models.profile_model import Profile
-from sqlalchemy.orm import Session
 from rapidfuzz import fuzz
+from sqlalchemy.orm import Session
+
+from app.models.profile_model import Profile
+
 
 def find_matching_profile(
     db: Session,
@@ -10,18 +12,19 @@ def find_matching_profile(
     last_name: str,
     name_similarity_threshold: int = 90,
 ) -> Profile | None:
-    """ Finds a matching profile using, in order: exact email match, exact phone match, 
-    or fuzzy first+last name similarity above name_similarity_threshold. Returns None if no match is found."""
+    """Finds a matching profile using, in order: exact email match, exact phone match,
+    or fuzzy first+last name similarity above name_similarity_threshold. Returns None if no match is found.
+    """
 
     # 1. Exact match by email
     if email is not None:
-        profile = (db.query(Profile).filter(Profile.email == email).first())
+        profile = db.query(Profile).filter(Profile.email == email).first()
         if profile is not None:
             return profile
 
     # 2. Exact match by phone number
     if phone_number is not None:
-        profile = (db.query(Profile).filter(Profile.phone_number == phone_number).first())
+        profile = db.query(Profile).filter(Profile.phone_number == phone_number).first()
         if profile is not None:
             return profile
 
@@ -36,7 +39,7 @@ def find_matching_profile(
     for profile in profiles:
         profile_full_name = f"{profile.first_name} {profile.last_name}"
 
-        score = fuzz.ratio(input_full_name,profile_full_name)
+        score = fuzz.ratio(input_full_name, profile_full_name)
 
         if score > best_score:
             best_score = score
@@ -48,7 +51,6 @@ def find_matching_profile(
 
     # 5. No sufficiently good match
     return None
-
 
 
 def merge_profiles(existing_profile: Profile, new_profile: dict) -> Profile:

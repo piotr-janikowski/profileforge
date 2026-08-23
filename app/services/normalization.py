@@ -1,4 +1,5 @@
 import re
+
 import phonenumbers
 from phonenumbers.phonenumberutil import NumberParseException
 
@@ -7,6 +8,7 @@ def normalize_name(name: str) -> str:
     """Collapses whitespace to single spaces and converts the name to title case."""
     cleaned = re.sub(r"\s+", " ", name.strip())
     return cleaned.title()
+
 
 def split_full_name(name: str):
     """Splits a full name into first_name (all words except the last) and last_name (the last word). If only one word is given, first_name will be empty."""
@@ -41,8 +43,10 @@ def normalize_phone(phone_number: str | None, default_region: str = "PL") -> str
 
     if not phonenumbers.is_valid_number(parsed):
         return None
-    
-    normalized_phone = phonenumbers.format_number(parsed, phonenumbers.PhoneNumberFormat.E164)
+
+    normalized_phone = phonenumbers.format_number(
+        parsed, phonenumbers.PhoneNumberFormat.E164
+    )
     return normalized_phone
 
 
@@ -52,7 +56,7 @@ def normalize_email(email: str | None) -> str | None:
         return None
 
     email = email.strip()
-    
+
     return email.lower() if email else None
 
 

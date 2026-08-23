@@ -1,5 +1,6 @@
 from app.models.profile_model import Profile
 
+
 def test_get_nonexistent_profile_returns_404(client):
     response = client.get("/profiles/9999")
 
@@ -13,7 +14,7 @@ def test_create_profile_without_required_address_returns_422(client):
         "age": "26",
         "phone_number": "+48123456789",
         "email": "michal@example.com",
-        #"address": "ul. Długa 10, Wrocław",
+        # "address": "ul. Długa 10, Wrocław",
         "comment": "",
         "source": "web_form",
     }

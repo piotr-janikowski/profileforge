@@ -1,5 +1,7 @@
 from datetime import datetime
+
 from pydantic import BaseModel, Field
+
 
 class ProfileCreate(BaseModel):
     first_name: str = Field(..., examples=["Michał"])
@@ -20,7 +22,7 @@ class ProfileUpdate(BaseModel):
     email: str | None = None
     address: str | None = None
     comment: str | None = None
-    #source: str | None = None -m "source intentionally omitted - should not be editable after creation"
+    # source: str | None = None -m "source intentionally omitted - should not be editable after creation"
 
 
 class ProfileOut(BaseModel):
@@ -36,4 +38,4 @@ class ProfileOut(BaseModel):
     created_at: datetime = Field(..., examples=["2026-08-19T14:30:00"])
 
     class Config:
-        from_attributes = True  # Pozwóla Pydantic tworzyć model z obiektu SQLAlchemy przez jego pola/atrybuty. Bez tego return często nie działa z response_model=ProfileOut w FastAPI, bo Pydantic nie wie jak zmapować obiekt SQLAlchemy na model Pydantic. 
+        from_attributes = True  # Pozwóla Pydantic tworzyć model z obiektu SQLAlchemy przez jego pola/atrybuty. Bez tego return często nie działa z response_model=ProfileOut w FastAPI, bo Pydantic nie wie jak zmapować obiekt SQLAlchemy na model Pydantic.

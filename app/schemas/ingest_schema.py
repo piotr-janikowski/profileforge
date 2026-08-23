@@ -1,5 +1,6 @@
+
 from pydantic import BaseModel, Field
-from datetime import datetime
+
 
 class RawProfileIn(BaseModel):
     name: str = Field(..., examples=["Michał Kowalski"])
