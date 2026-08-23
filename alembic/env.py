@@ -1,6 +1,6 @@
 import os
 
-from dotenv import load_dotenv
+from app.core.config import settings
 
 from app.database.base import Base
 from app.models.profile_model import Profile
@@ -13,8 +13,6 @@ from sqlalchemy import pool
 
 from alembic import context
 
-
-load_dotenv()
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -71,9 +69,9 @@ def run_migrations_online() -> None:
     """
     config.set_main_option(
         "sqlalchemy.url",
-        f"postgresql+psycopg2://{os.getenv('POSTGRES_USER')}:"
-        f"{os.getenv('POSTGRES_PASSWORD')}@{os.getenv('POSTGRES_HOST')}:5432/"
-        f"{os.getenv('POSTGRES_DB')}"
+        f"postgresql+psycopg2://{settings.postgres_user}:"
+            f"{settings.postgres_password}@{settings.postgres_host}:5432/"
+            f"{settings.postgres_db}"
     )
 
     connectable = engine_from_config(

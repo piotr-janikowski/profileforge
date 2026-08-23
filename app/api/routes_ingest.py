@@ -14,7 +14,10 @@ from app.services.normalization import (
     )
 from app.services.entity_resolution import find_matching_profile, merge_profiles
 from app.services.profile_service import save_profile, create_profile
+import logging
 
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(tags=["Ingest"])
 
@@ -54,8 +57,11 @@ def ingest(data: RawProfileIn, db: Session = Depends(get_db)):
     matching_profile = find_matching_profile(db, normalized_email, normalized_phone, normalized_first_name, normalized_last_name)
     if matching_profile:
         merged_profile = merge_profiles(matching_profile, incoming_data)
+        logger.info(f"Merged incoming data into existing profile id={matching_profile.id}")
         return save_profile(db, merged_profile)
 
     profile_create = ProfileCreate(**incoming_data)
-    return create_profile(db, profile_create)
+    new_profile = create_profile(db, profile_create)
+    logger.info(f"Created new profile id={new_profile.id}")
+    return new_profile
 

@@ -3,19 +3,18 @@ import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from fastapi.testclient import TestClient
-from dotenv import load_dotenv
+from app.core.config import settings
 
 from app.main import app
 from app.database.base import Base
 from app.database.session import get_db
 from app.models.profile_model import Profile
 
-load_dotenv()
 
 TEST_DATABASE_URL = (
-    f"postgresql+psycopg2://{os.getenv('POSTGRES_TEST_USER')}:"
-    f"{os.getenv('POSTGRES_TEST_PASSWORD')}@localhost:5433/"
-    f"{os.getenv('POSTGRES_TEST_DB')}"
+    f"postgresql+psycopg2://{settings.postgres_test_user}:"
+    f"{settings.postgres_test_password}@localhost:5433/"
+    f"{settings.postgres_test_db}"
 )
 
 test_engine = create_engine(TEST_DATABASE_URL)

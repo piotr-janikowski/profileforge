@@ -1,14 +1,13 @@
 import os
-from dotenv import load_dotenv
+from app.core.config import settings
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-load_dotenv()
 
 DATABASE_URL = (
-    f"postgresql+psycopg2://{os.getenv('POSTGRES_USER')}:"
-    f"{os.getenv('POSTGRES_PASSWORD')}@{os.getenv('POSTGRES_HOST')}:5432/"
-    f"{os.getenv('POSTGRES_DB')}"
+    f"postgresql+psycopg2://{settings.postgres_user}:"
+    f"{settings.postgres_password}@{settings.postgres_host}:5432/"
+    f"{settings.postgres_db}"
 )
 
 engine = create_engine(DATABASE_URL)
