@@ -19,9 +19,22 @@ jobs:
           POSTGRES_DB: profileforge_db
         ports:
           - 5432:5432
-          - 5433:5432
         options: >-
           --health-cmd "pg_isready -U profileforge_user -d profileforge_db"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+
+      postgres-test:
+        image: postgres:16
+        env:
+          POSTGRES_USER: profileforge_test_user
+          POSTGRES_PASSWORD: test_password
+          POSTGRES_DB: profileforge_test_db
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd "pg_isready -U profileforge_test_user -d profileforge_test_db"
           --health-interval 5s
           --health-timeout 5s
           --health-retries 5
